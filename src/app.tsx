@@ -1,12 +1,11 @@
 import React from 'react';
 import { BasicLayoutProps, Settings as LayoutSettings } from '@ant-design/pro-layout';
-
 import { notification } from 'antd';
 import { history, RequestConfig } from 'umi';
 import RightContent from '@/components/RightContent';
 import Footer from '@/components/Footer';
+import { ResponseError } from 'umi-request';
 import { queryCurrent } from './services/user';
-
 import defaultSettings from '../config/defaultSettings';
 
 export async function getInitialState(): Promise<{
@@ -66,7 +65,7 @@ const codeMessage = {
 /**
  * 异常处理程序
  */
-const errorHandler = (error: { response: Response }) => {
+const errorHandler = (error: ResponseError) => {
   const { response } = error;
   if (response && response.status) {
     const errorText = codeMessage[response.status] || response.statusText;
